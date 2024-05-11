@@ -1,6 +1,6 @@
 //Importaciones
 const express = require('express');
-// const HttpError = require('HttpError');
+const HttpError = require('../MODELS/http-error');
 
 const router = express.Router();
 
@@ -42,10 +42,9 @@ router.get('/', (req, res, next)=>{
         return p.creator === req.params.uid
     });
     if(!places){
-        throw new Error('Lugar no existe para el ID de usuario especificado');
+        throw new HttpError('Lugar no existe para el ID de usuario especificado', 404);
     }
-    res.status(error.code)
-    res.json|(places);
+    res.json({places});
 
 
     // if(!places){
@@ -53,6 +52,10 @@ router.get('/', (req, res, next)=>{
     //     error.code = 404;
     //     next(error);
     // }
+ })
+
+ router.post('/', (req, res, next)=>{
+    
  })
 
 module.exports = router;
