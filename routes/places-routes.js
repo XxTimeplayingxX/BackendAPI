@@ -1,6 +1,7 @@
 //Importaciones
 const express = require('express');
 const HttpError = require('../MODELS/http-error');
+const {v4: uuiv4} = require('uuid');
 
 const router = express.Router();
 
@@ -22,6 +23,7 @@ router.get('/', (req, res, next)=>{
     res.json({DUMMY_PLACES});
     
 });
+
 
  router.get('/:pid', (req, res, next) => {
      const place = DUMMY_PLACES.find(p => {
@@ -55,7 +57,16 @@ router.get('/', (req, res, next)=>{
  })
 
  router.post('/', (req, res, next)=>{
-    
+    const {id, title, creator} = req.body;
+    const createdPlace = {
+        id : uuiv4(),
+        title: title, 
+        creator: creator
+    };
+    console.log(createdPlace);
+    DUMMY_PLACES.push(createdPlace);
+    res.status(201).json({place:createdPlace});
+
  })
 
 module.exports = router;
